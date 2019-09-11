@@ -56,7 +56,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-    const { employee, designation, age } = state.userInfo;
+    const { employee, designation, age, } = state.userInfo;
     return {
         employee,
         designation,

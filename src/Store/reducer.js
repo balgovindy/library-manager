@@ -13,30 +13,39 @@ const reducer = (state = initialState, action) => {
         case USER_INFO:
             const inputType = action.event.target.getAttribute('name');
             const inputValue = action.event.target.value;
-            return {
-                ...state,
+            return Object.assign({}, state, {
                 userInfo: {
                     ...state.userInfo,
-                    [inputType]: inputValue
-                }
-            }
+                    [inputType]: inputValue,
+
+                },
+            })
         case ADD_TO_LIB:
             action.event.preventDefault();
             state.userInfo.index = ++state.index;
             state.userInfo.text = NORMAL;
             const userInfo = JSON.parse(JSON.stringify(state.userInfo))
             state.userInfo = {}
-            return {
-                ...state,
-                lib: state.lib.concat(userInfo)
-            }
+            return Object.assign({}, state, {
+                lib: [
+                    ...state.lib,
+                    userInfo
+                ]
+            })
         case ADD_TO_FAV:
             const inputText = action.text;
             const newtextState = inputText === NORMAL ? FAVOURITE : NORMAL;
             state.lib[action.index - 1].text = newtextState;
-            return {
-                ...state,
-            }
+            let favObj = state.lib[action.index - 1];
+            return Object.assign({}, state, {
+                lib: [
+                    ...state.lib,
+                ],
+                fav: [
+                    ...state.fav,
+                    favObj
+                ]
+            });
         case REMOVE_FROM_LIB:
             console.log(REMOVE_FROM_LIB)
             return {

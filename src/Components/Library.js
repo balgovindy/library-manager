@@ -32,7 +32,6 @@ class Library extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.lib)
     return {
         lib: state.lib
     }
