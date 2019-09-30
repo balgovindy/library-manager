@@ -1,4 +1,5 @@
 import React from 'react';
+import { DELETE } from './defaultData';
 import './../Style/card.scss';
 
 function Card(props) {
@@ -8,7 +9,24 @@ function Card(props) {
                 <h3 className="card-title">{props.employee}</h3>
                 <h5 className="card-title">{props.designation}</h5>
                 <p>Age:{props.age ? props.age : 'NA'}</p>
-                {props.button && <button onClick={props.handleFavourite}className="cardButton" id={props.id}>{props.text}</button>}
+                {props.button && (
+                    <div>
+                        <button
+                            onClick={props.handleFavourite}
+                            className="cardButton cardfavourite"
+                            id={props.id}
+                        >
+                            {props.text}
+                        </button>
+                        <button
+                            onClick={props.handleDelete}
+                            className="cardButton carddelete"
+                            id={`delete_${props.id}`}
+                        >
+                            <span>{DELETE}</span>
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     )

@@ -1,5 +1,6 @@
-import { USER_INFO, ADD_TO_LIB, REMOVE_FROM_LIB, ADD_TO_FAV, REMOVE_FROM_FAV } from './../Components/Constant';
+import { USER_INFO, ADD_TO_LIB, REMOVE_FROM_LIB, HANDLE_FAV } from './../Components/Constant';
 import { NORMAL, FAVOURITE } from './../Components/defaultData'
+import { stat } from 'fs';
 const initialState = {
     lib: [],
     fav: [],
@@ -32,34 +33,46 @@ const reducer = (state = initialState, action) => {
                     userInfo
                 ]
             })
-        case ADD_TO_FAV:
+
+        case HANDLE_FAV:
+            let cardObj;
             const inputText = action.text;
             const newtextState = inputText === NORMAL ? FAVOURITE : NORMAL;
-            state.lib[action.index - 1].text = newtextState;
-            let favObj = state.lib[action.index - 1];
-            return Object.assign({}, state, {
-                lib: [
-                    ...state.lib,
-                ],
-                fav: [
-                    ...state.fav,
-                    favObj
-                ]
-            });
-        case REMOVE_FROM_LIB:
-            console.log(REMOVE_FROM_LIB)
-            return {
-                ...state
+            cardObj = state.lib.find(card => card.index === action.index)
+            cardObj.text = newtextState;
+            if (newtextState === FAVOURITE) {
+                return Object.assign({}, state, {
+                    lib: [
+                        ...state.lib,
+                    ],
+                    fav: [
+                        ...state.fav,
+                        cardObj
+                    ]
+                });
+            } else {
+                return Object.assign({}, state, {
+                    lib: [
+                        ...state.lib
+                    ],
+                    fav: [
+                        ...state.fav,
+                        cardObj
+                    ]
+                },
+                    {
+                        fav: state.fav.filter(card => card.index !== action.index)
+                    })
             }
-        case REMOVE_FROM_FAV:
-            console.log(REMOVE_FROM_FAV)
+        case REMOVE_FROM_LIB:
             return {
-                ...state
+                ...state,
+                lib: state.lib.filter(card => card.index !== action.index),
+                fav: state.fav.filter(card => card.index !== action.index)
             }
         default:
             break
     }
     return newState
 }
-
 export default reducer;
