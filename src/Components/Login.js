@@ -48,6 +48,7 @@ class Login extends Component {
                         type="submit"
                         className="btn btn-primary"
                         value="Submit"
+                        disabled={this.props.disabled}
                     />
                 </form>
             </div>
@@ -56,11 +57,13 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-    const { employee, designation, age, } = state.userInfo;
+    const { employee, designation, age } = state.userInfo;
+    const { disabled } = state;
     return {
         employee,
         designation,
-        age
+        age,
+        disabled
     }
 }
 const mapDispatchToProps = (dispatch) => {

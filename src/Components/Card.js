@@ -4,7 +4,7 @@ import './../Style/card.scss';
 
 function Card(props) {
     return (
-        <div className="card m-3 col-lg-3 col-md-4 col-sm-6">
+        <div className="card m-3 col-lg-3 col-md-4 col-sm-6 bg-info cardWrapper">
             <div className="card-body text-center">
                 <h3 className="card-title">{props.employee}</h3>
                 <h5 className="card-title">{props.designation}</h5>

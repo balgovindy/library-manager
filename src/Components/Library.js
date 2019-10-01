@@ -3,20 +3,22 @@ import { connect } from 'react-redux';
 import Card from './Card';
 import { EPMTY_LIB } from './defaultData';
 import Header from './Header';
-import { HANDLE_FAV, REMOVE_FROM_LIB } from './Constant';
+import Search from './Search';
+import { HANDLE_FAV, REMOVE_FROM_LIB, LIB_SEARCH } from './Constant';
 import './../Style/library.scss';
 
 
 class Library extends Component {
+
     render() {
         let libraryData;
-        const tempData = this.props.lib.map(lib => <Card
+        const tempData = this.props.lib.map(lib => (lib.visible && <Card
             handleFavourite={() => this.props.handleFavourite(lib.index, lib.text)}
             handleDelete={() => this.props.handleDelete(lib.index)}
             {...lib}
             id={`button_${lib.index}`}
             button
-            key={lib.index} />
+            key={lib.index} />)
         )
         if (tempData.length > 0) {
             libraryData = tempData
@@ -25,7 +27,13 @@ class Library extends Component {
         }
         return (
             <div className="container">
-                <div className="row justify-content-center">
+                {!!tempData.length && <Search
+                    name={LIB_SEARCH}
+                />}
+                <div
+                    id={LIB_SEARCH}
+                    className="row justify-content-center"
+                >
                     {libraryData}
                 </div>
             </div>
