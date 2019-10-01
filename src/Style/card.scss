@@ -1,0 +1,15 @@
+.cardWrapper:hover{
+  transform: scale(1.1);
+  transition: transform 0.5s
+}
+.cardButton{
+    border:transparent;
+    background: transparent;
+}
+
+.cardfavourite{
+    float:left;
+}
+.carddelete{
+    float: right;
+}
